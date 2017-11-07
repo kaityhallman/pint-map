@@ -1,7 +1,7 @@
 import * as types from '../actions/actionTypes';
 import initialState from './initialState';
 
-export default plotReducer(state = initialState.plots, action) {
+export default function plotReducer(state = initialState.plots, action) {
   switch (action.type) {
     case types.REQUEST_MAP_PLOTS:
       return Object.assign({}, state, {
@@ -14,7 +14,7 @@ export default plotReducer(state = initialState.plots, action) {
         isFetching: false,
         data: action.plots,
         lastUpdated: action.receivedAt,
-        error: null;
+        error: null,
       });
 
     case types.RECEIVE_MAP_PLOTS_FAILURE:
@@ -23,5 +23,8 @@ export default plotReducer(state = initialState.plots, action) {
         data: action.plots,
         error: action.error,
       });
+
+    default:
+      return state;
   }
 }

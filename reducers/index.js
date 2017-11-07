@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
-// import reducers here
+import plotReducer from './plotReducer';
 
 const pintApp = combineReducers({
-  
+  plotReducer,
 });
 
 export default pintApp;
