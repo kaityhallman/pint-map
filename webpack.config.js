@@ -1,4 +1,7 @@
-var config = {
+const webpack = require('webpack');
+const myEnv = require('dotenv').config();
+
+const config = {
   entry: './main.js', // entry point
   output: {
     filename: 'index.js', // place where bundled app will be served
@@ -19,6 +22,11 @@ var config = {
       },
     ],
   },
+  plugins: [
+    new webpack.DefinePlugin({
+      API_KEY: JSON.stringify(myEnv.parsed.API_KEY),
+    }),
+  ],
 };
 
 module.exports = config;
