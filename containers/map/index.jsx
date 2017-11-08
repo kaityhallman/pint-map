@@ -7,6 +7,8 @@ import {
   Marker
 } from 'react-google-maps';
 
+import mapStyles from './styles.json';
+
 const Map = compose(
   withProps({
     googleMapURL: API_URL,
@@ -20,6 +22,7 @@ const Map = compose(
   <GoogleMap
     defaultZoom={14}
     defaultCenter={{lat: 35.2271, lng: -80.8431}}
+    defaultOptions={{ styles: mapStyles }}
   />
 );
 

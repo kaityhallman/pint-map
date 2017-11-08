@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const Article = styled.article`
-  font-family: 'Helvetica';
+  font-family: Helvetica;
 `;
 
 export const Container = styled.section`

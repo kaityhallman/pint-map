@@ -9,7 +9,42 @@ export class Main extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {};
+    this.state = {
+      breweryPlot: {
+        name: '',
+        city: '',
+        state: '',
+      }
+    };
+  }
+
+  addBrewery = (event) => {
+    event.preventDefault();
+    console.log('added brewery', event.target.value);
+  }
+
+  handleBreweryName = (event) => {
+    const breweryPlot = Object.assign({}, this.state.breweryPlot);
+
+    breweryPlot.name = event.target.value;
+
+    this.setState({ breweryPlot });
+  }
+
+  handleCityName = (event) => {
+    const breweryPlot = Object.assign({}, this.state.breweryPlot);
+
+    breweryPlot.city = event.target.value;
+
+    this.setState({ breweryPlot });
+  }
+
+  handleStateSelection = (event) => {
+    const breweryPlot = Object.assign({}, this.state.breweryPlot);
+
+    breweryPlot.state = event.target.value;
+
+    this.setState({ breweryPlot });
   }
 
   render() {
@@ -19,7 +54,12 @@ export class Main extends Component {
           <Map />
         </Container>
         <Container>
-          <Form />
+          <Form
+            addBrewery={this.addBrewery}
+            handleBreweryName={this.handleBreweryName}
+            handleCityName={this.handleCityName}
+            handleStateSelection={this.handleStateSelection}
+          />
         </Container>
       </article>
     )
