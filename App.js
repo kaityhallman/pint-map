@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import Main from './containers/Main/main.jsx';
+import Main from './containers/main/index.jsx';
 
 class App extends Component {
   render() {
