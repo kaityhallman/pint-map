@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 
 import { Article, Container } from './style/main';
-
 import Form from '../form/index.jsx';
 import Map from '../map/index.jsx';
 
-export class Main extends Component {
+class Main extends Component {
   constructor(props) {
     super(props);
 
@@ -14,7 +13,7 @@ export class Main extends Component {
         name: '',
         city: '',
         state: '',
-      }
+      },
     };
   }
 
@@ -49,7 +48,7 @@ export class Main extends Component {
 
   render() {
     return (
-      <article>
+      <Article>
         <Container>
           <Map />
         </Container>
@@ -61,8 +60,8 @@ export class Main extends Component {
             handleStateSelection={this.handleStateSelection}
           />
         </Container>
-      </article>
-    )
+      </Article>
+    );
   }
 }
 

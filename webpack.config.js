@@ -20,6 +20,11 @@ const config = {
           presets: ['es2015', 'react', 'stage-0'],
         },
       },
+      {
+        test: /\.jsx?$/,
+        exclude: /node_modules/,
+        loaders: ['eslint-loader']
+      },
     ],
   },
   plugins: [

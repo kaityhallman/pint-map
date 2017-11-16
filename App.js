@@ -1,13 +1,9 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 import Main from './containers/main/index.jsx';
 
-class App extends Component {
-  render() {
-    return (
-      <Main />
-    );
-  }
-}
+const App = () => (
+  <Main />
+);
 
 export default App;
