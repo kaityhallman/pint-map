@@ -5,7 +5,7 @@ import { Article, Container } from './style/main';
 import Form from '../form/index.jsx';
 import Map from '../map/index.jsx';
 
-import { savePlots } from '../../actions/plotActions';
+import { fetchMapPlots, savePlots } from '../../actions/plotActions';
 
 class Main extends Component {
   constructor(props) {
@@ -24,12 +24,16 @@ class Main extends Component {
     };
   }
 
+  componentDidMount() {
+    this.props.getPlots();
+  }
+
   savePlots = (plot) => {
     const breweries = [];
     breweries.push(plot);
     this.setState({ breweries: [...this.state.breweries, ...breweries] });
 
-    savePlots(breweries);
+    this.props.saveMapPlots(breweries);
   }
 
   geocodeAddress = (plot) => {
@@ -102,7 +106,7 @@ class Main extends Component {
       <Article>
         <Container>
           <Map
-            breweries={this.state.breweries}
+            breweries={this.props.plots.data}
           />
         </Container>
         <Container>
@@ -129,4 +133,11 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(Main);
+function mapDispatchToProps(dispatch) {
+  return {
+    saveMapPlots: (plots) => dispatch(savePlots(plots)),
+    getPlots: () => dispatch(fetchMapPlots()),
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Main);

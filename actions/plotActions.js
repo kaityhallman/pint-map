@@ -1,6 +1,7 @@
 import * as types from './actionTypes';
+import database from '../config/database';
 
-// call API here.
+import { saveMapPlots } from '../api/plotsApi';
 
 export function requestMapPlots() {
   return { type: types.REQUEST_MAP_PLOTS };
@@ -24,14 +25,13 @@ export function fetchMapPlots() {
   return function dispatchRequestMapPlots(dispatch) {
     dispatch(requestMapPlots());
 
-    // api call here
-    return getMapPlots()
-      .then((plots) => {
-        dispatch(receiveMapPlotsSuccess(plots));
-      })
-      .catch((error) => {
-        dispatch(receiveMapPlotsFailure(error));
-      });
+    return database.ref('/plots').once('value', snap => {
+      const plots = snap.val();
+      dispatch(receiveMapPlotsSuccess(plots));
+    })
+    .catch((error) => {
+      dispatch(receiveMapPlotsFailure(error));
+    });
   };
 }
 
@@ -57,12 +57,15 @@ export function savePlots(plots) {
   return function dispatchSaveMapPlots(dispatch) {
     dispatch(requestSaveMapPlots());
 
-    return saveMapPlots(plots)
+    const plotRef = database.ref('/plots');
+    plotRef.push({
+      plots,
+    })
       .then(() => {
-        dispatch(receiveMapPlotsSuccess(plots));
+        dispatch(receiveSaveMapPlotsSuccess(plots));
       })
       .catch((error) => {
-        dispatch(receiveSaveMapPlotsFailure(error));
+        dispatch(receiveMapPlotsFailure(error));
       });
   };
 }

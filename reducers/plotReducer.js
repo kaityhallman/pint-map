@@ -9,13 +9,20 @@ export default function plotReducer(state = initialState.plots, action) {
         error: null,
       });
 
-    case types.RECEIVE_MAP_PLOTS_SUCCESS:
+    case types.RECEIVE_MAP_PLOTS_SUCCESS: {
+      const dataObjects = Object.values(action.plots);
+      const plots = [];
+      dataObjects.map((obj) => {
+        return plots.push(obj.plots[0]);
+      });
+
       return Object.assign({}, state, {
         isFetching: false,
-        data: action.plots,
+        data: plots,
         lastUpdated: action.receivedAt,
         error: null,
       });
+    }
 
     case types.RECEIVE_MAP_PLOTS_FAILURE:
       return Object.assign({}, state, {
@@ -31,10 +38,9 @@ export default function plotReducer(state = initialState.plots, action) {
       });
 
     case types.RECEIVE_SAVE_MAP_PLOTS_SUCCESS:
-      console.log(state.plots, action.plots) // eslint-disable-line
       return Object.assign({}, state, {
         isFetching: false,
-        data: action.plots,
+        data: state.data.concat(action.plots),
         lastUpdated: action.receivedAt,
         error: null,
       });

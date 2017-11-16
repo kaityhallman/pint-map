@@ -1,5 +1,5 @@
 import React from 'react';
-import { compose, withProps, lifecycle } from 'recompose';
+import { compose, withProps } from 'recompose';
 import {
   withGoogleMap,
   GoogleMap,
@@ -16,13 +16,21 @@ const Map = compose(
     mapElement: <div style={{ height: '100%' }} />,
   }),
   withGoogleMap,
-)(() =>
+)((props) =>
   (
     <GoogleMap
       defaultZoom={14}
       defaultCenter={{ lat: 35.2271, lng: -80.8431 }}
       defaultOptions={{ styles: mapStyles }}
-    />
+    >
+      {props.breweries.map((plot) => {
+        return (
+          <Marker
+            key={plot.breweryName}
+            position={{ lat: plot.latitude, lng: plot.longitude }} />
+        );
+      })}
+    </GoogleMap>
   ));
 
 export default Map;

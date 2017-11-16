@@ -23,7 +23,11 @@ const config = {
       {
         test: /\.jsx?$/,
         exclude: /node_modules/,
-        loaders: ['eslint-loader']
+        loaders: 'eslint-loader',
+        options: {
+          emitWarning: true,
+          configFile: "./.eslintrc.json"
+        },
       },
     ],
   },
@@ -31,6 +35,9 @@ const config = {
     new webpack.DefinePlugin({
       API_KEY: JSON.stringify(myEnv.parsed.API_KEY),
       API_URL: JSON.stringify(myEnv.parsed.API_URL),
+      FIREBASE_API_KEY: JSON.stringify(myEnv.parsed.FIREBASE_API_KEY),
+      AUTH_DOMAIN: JSON.stringify(myEnv.parsed.AUTH_DOMAIN),
+      DATABASE_URL: JSON.stringify(myEnv.parsed.DATABASE_URL),
     }),
   ],
 };
