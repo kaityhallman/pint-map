@@ -1,6 +1,9 @@
 {
     "parser": "babel-eslint",
-    "extends": ["eslint:recommended", "plugin:react/recommended", "airbnb"] ,
+    "extends": ["eslint:recommended", "plugin:react/recommended", "airbnb"],
+    "env": {
+      "browser": true
+    },
     "rules": {
       "no-unused-vars": "warn",
       "import/extensions": "never",

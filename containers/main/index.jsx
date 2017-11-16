@@ -8,24 +8,68 @@ class Main extends Component {
   constructor(props) {
     super(props);
 
+    this.geocoder = new window.google.maps.Geocoder();
+
     this.state = {
       breweryPlot: {
-        name: '',
+        beerName: '',
+        breweryName: '',
         city: '',
-        state: '',
+        state: 'Some cool state',
       },
+      breweries: [],
     };
+  }
+
+  geocodeAddress = (plot) => {
+    const plotToSave = Object.assign({}, plot);
+    const address = `${plotToSave.city} ${plotToSave.state}`;
+    this.geocoder.geocode({
+      address,
+    }, (results, status) => {
+      if (status === 'OK') {
+        plotToSave.latitude = results[0].geometry.location.lat();
+        plotToSave.longitude = results[0].geometry.location.lng();
+      } else {
+        console.error(`Geocode was not successful for the following reason: ${status}`); // eslint-disable-line no-console
+      }
+    });
   }
 
   addBrewery = (event) => {
     event.preventDefault();
-    console.log('added brewery', event.target.value);
+
+    const breweries = [];
+
+    breweries.push(this.state.breweryPlot);
+
+    const breweryPlot = Object.assign({}, this.state.breweryPlot);
+
+    this.geocodeAddress(breweryPlot);
+
+    this.setState({
+      breweries: [...this.state.breweries, ...breweries],
+      breweryPlot: {
+        beerName: '',
+        breweryName: '',
+        city: '',
+        state: 'Some cool state',
+      },
+    });
+  }
+
+  handleBeerName = (event) => {
+    const breweryPlot = Object.assign({}, this.state.breweryPlot);
+
+    breweryPlot.beerName = event.target.value;
+
+    this.setState({ breweryPlot });
   }
 
   handleBreweryName = (event) => {
     const breweryPlot = Object.assign({}, this.state.breweryPlot);
 
-    breweryPlot.name = event.target.value;
+    breweryPlot.breweryName = event.target.value;
 
     this.setState({ breweryPlot });
   }
@@ -47,17 +91,25 @@ class Main extends Component {
   }
 
   render() {
+    const { breweryPlot } = this.state;
     return (
       <Article>
         <Container>
-          <Map />
+          <Map
+            breweries={this.state.breweries}
+          />
         </Container>
         <Container>
           <Form
             addBrewery={this.addBrewery}
+            handleBeerName={this.handleBeerName}
             handleBreweryName={this.handleBreweryName}
             handleCityName={this.handleCityName}
             handleStateSelection={this.handleStateSelection}
+            beerName={breweryPlot.beerName}
+            breweryName={breweryPlot.breweryName}
+            city={breweryPlot.city}
+            state={breweryPlot.state}
           />
         </Container>
       </Article>

@@ -1,7 +1,6 @@
 import React from 'react';
-import { compose, withProps } from 'recompose';
+import { compose, withProps, lifecycle } from 'recompose';
 import {
-  withScriptjs,
   withGoogleMap,
   GoogleMap,
   Marker,
@@ -16,7 +15,6 @@ const Map = compose(
     containerElement: <div style={{ height: '500px' }} />,
     mapElement: <div style={{ height: '100%' }} />,
   }),
-  withScriptjs,
   withGoogleMap,
 )(() =>
   (
