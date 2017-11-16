@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 import { Article, Container } from './style/main';
 import Form from '../form/index.jsx';
 import Map from '../map/index.jsx';
+
+import { savePlots } from '../../actions/plotActions';
 
 class Main extends Component {
   constructor(props) {
@@ -21,6 +24,14 @@ class Main extends Component {
     };
   }
 
+  savePlots = (plot) => {
+    const breweries = [];
+    breweries.push(plot);
+    this.setState({ breweries: [...this.state.breweries, ...breweries] });
+
+    savePlots(breweries);
+  }
+
   geocodeAddress = (plot) => {
     const plotToSave = Object.assign({}, plot);
     const address = `${plotToSave.city} ${plotToSave.state}`;
@@ -30,6 +41,8 @@ class Main extends Component {
       if (status === 'OK') {
         plotToSave.latitude = results[0].geometry.location.lat();
         plotToSave.longitude = results[0].geometry.location.lng();
+
+        this.savePlots(plotToSave);
       } else {
         console.error(`Geocode was not successful for the following reason: ${status}`); // eslint-disable-line no-console
       }
@@ -39,16 +52,9 @@ class Main extends Component {
   addBrewery = (event) => {
     event.preventDefault();
 
-    const breweries = [];
-
-    breweries.push(this.state.breweryPlot);
-
-    const breweryPlot = Object.assign({}, this.state.breweryPlot);
-
-    this.geocodeAddress(breweryPlot);
+    this.geocodeAddress(this.state.breweryPlot);
 
     this.setState({
-      breweries: [...this.state.breweries, ...breweries],
       breweryPlot: {
         beerName: '',
         breweryName: '',
@@ -117,4 +123,10 @@ class Main extends Component {
   }
 }
 
-export default Main;
+function mapStateToProps(state) {
+  return {
+    plots: state.plots,
+  };
+}
+
+export default connect(mapStateToProps)(Main);

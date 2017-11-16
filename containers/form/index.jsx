@@ -11,7 +11,7 @@ const Form = (props) => {
           <label
             htmlFor="beer"
           >
-              Beer Name*
+              Beer Name
               <input
                 type="text"
                 name="beer"
@@ -26,7 +26,7 @@ const Form = (props) => {
           <label
             htmlFor="location"
           >
-              Brewery Name
+              Brewery Name*
               <input
                 type="text"
                 name="location"
@@ -41,7 +41,7 @@ const Form = (props) => {
           <label
             htmlFor="city"
           >
-              City
+              City*
               <input
                 type="text"
                 name="city"
@@ -56,7 +56,7 @@ const Form = (props) => {
           <label
             htmlFor="state"
           >
-              State
+              State*
               <select
                 onChange={event => props.handleStateSelection(event)}
                 name="state"

@@ -34,3 +34,35 @@ export function fetchMapPlots() {
       });
   };
 }
+
+export function requestSaveMapPlots() {
+  return { type: types.REQUEST_SAVE_MAP_PLOTS };
+}
+
+export function receiveSaveMapPlotsSuccess(plots) {
+  return {
+    type: types.RECEIVE_SAVE_MAP_PLOTS_SUCCESS,
+    plots,
+  };
+}
+
+export function receiveSaveMapPlotsFailure(error) {
+  return {
+    type: types.RECEIVE_SAVE_MAP_PLOTS_FAILURE,
+    error,
+  };
+}
+
+export function savePlots(plots) {
+  return function dispatchSaveMapPlots(dispatch) {
+    dispatch(requestSaveMapPlots());
+
+    return saveMapPlots(plots)
+      .then(() => {
+        dispatch(receiveMapPlotsSuccess(plots));
+      })
+      .catch((error) => {
+        dispatch(receiveSaveMapPlotsFailure(error));
+      });
+  };
+}

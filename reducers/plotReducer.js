@@ -24,6 +24,28 @@ export default function plotReducer(state = initialState.plots, action) {
         error: action.error,
       });
 
+    case types.REQUEST_SAVE_MAP_PLOTS:
+      return Object.assign({}, state, {
+        isFetching: true,
+        error: null,
+      });
+
+    case types.RECEIVE_SAVE_MAP_PLOTS_SUCCESS:
+      console.log(state.plots, action.plots) // eslint-disable-line
+      return Object.assign({}, state, {
+        isFetching: false,
+        data: action.plots,
+        lastUpdated: action.receivedAt,
+        error: null,
+      });
+
+    case types.RECEIVE_SAVE_MAP_PLOTS_FAILURE:
+      return Object.assign({}, state, {
+        isFetching: false,
+        data: action.plots,
+        error: action.error,
+      });
+
     default:
       return state;
   }
