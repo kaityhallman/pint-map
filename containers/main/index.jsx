@@ -1,8 +1,15 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import firebase from 'firebase';
 
-import { Article, Container } from './style/main';
-import Form from '../form/index.jsx';
+import {
+  Article,
+  MapContainer,
+  FormContainer,
+  Wrapper,
+} from './style/main';
+import MapForm from '../forms/map-form/index.jsx';
 import Map from '../map/index.jsx';
 
 import { fetchMapPlots, savePlots } from '../../actions/plotActions';
@@ -100,32 +107,55 @@ class Main extends Component {
     this.setState({ breweryPlot });
   }
 
+  logOut = (event) => {
+    firebase.auth().signOut().then(() => {
+      this.props.toggleLogIn();
+      window.localStorage.removeItem('accessToken');
+    }).catch((error) => {
+      console.error(`An error prevented you from logging out: ${error}`); // eslint-disable-line
+    });
+  }
+
   render() {
     const { breweryPlot } = this.state;
     return (
       <Article>
-        <Container>
-          <Map
-            breweries={this.props.plots.data}
-          />
-        </Container>
-        <Container>
-          <Form
-            addBrewery={this.addBrewery}
-            handleBeerName={this.handleBeerName}
-            handleBreweryName={this.handleBreweryName}
-            handleCityName={this.handleCityName}
-            handleStateSelection={this.handleStateSelection}
-            beerName={breweryPlot.beerName}
-            breweryName={breweryPlot.breweryName}
-            city={breweryPlot.city}
-            state={breweryPlot.state}
-          />
-        </Container>
+        <button
+          onClick={event => this.logOut(event)}
+        >
+          Log Out
+        </button>
+        <Wrapper>
+          <MapContainer>
+            <Map
+              breweries={this.props.plots.data}
+            />
+          </MapContainer>
+          <FormContainer>
+            <MapForm
+              addBrewery={this.addBrewery}
+              handleBeerName={this.handleBeerName}
+              handleBreweryName={this.handleBreweryName}
+              handleCityName={this.handleCityName}
+              handleStateSelection={this.handleStateSelection}
+              beerName={breweryPlot.beerName}
+              breweryName={breweryPlot.breweryName}
+              city={breweryPlot.city}
+              state={breweryPlot.state}
+            />
+          </FormContainer>
+        </Wrapper>
       </Article>
     );
   }
 }
+
+Main.propTypes = {
+  getPlots: PropTypes.func.isRequired,
+  saveMapPlots: PropTypes.func.isRequired,
+  plots: PropTypes.object.isRequired,
+  toggleLogIn: PropTypes.func.isRequired,
+};
 
 function mapStateToProps(state) {
   return {
@@ -135,9 +165,9 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    saveMapPlots: (plots) => dispatch(savePlots(plots)),
+    saveMapPlots: plots => dispatch(savePlots(plots)),
     getPlots: () => dispatch(fetchMapPlots()),
-  }
+  };
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Main);

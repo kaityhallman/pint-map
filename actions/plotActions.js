@@ -1,8 +1,6 @@
 import * as types from './actionTypes';
 import database from '../config/database';
 
-import { saveMapPlots } from '../api/plotsApi';
-
 export function requestMapPlots() {
   return { type: types.REQUEST_MAP_PLOTS };
 }
@@ -25,13 +23,13 @@ export function fetchMapPlots() {
   return function dispatchRequestMapPlots(dispatch) {
     dispatch(requestMapPlots());
 
-    return database.ref('/plots').once('value', snap => {
+    return database.ref('/plots').once('value', (snap) => {
       const plots = snap.val();
       dispatch(receiveMapPlotsSuccess(plots));
     })
-    .catch((error) => {
-      dispatch(receiveMapPlotsFailure(error));
-    });
+      .catch((error) => {
+        dispatch(receiveMapPlotsFailure(error));
+      });
   };
 }
 

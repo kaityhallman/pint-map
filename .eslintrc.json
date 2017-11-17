@@ -9,6 +9,8 @@
     "import/extensions": "never",
     "no-undef": "warn",
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
-    "arrow-body-style": 0
+    "arrow-body-style": 0,
+    "import/no-unresolved": "off",
+    "react/forbid-prop-types": ["error", { "forbid": ["any"] }]
   }
 }

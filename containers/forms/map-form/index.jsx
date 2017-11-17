@@ -3,16 +3,26 @@ import PropTypes from 'prop-types';
 
 import stateData from './data/states.json';
 
+import {
+  FormSection,
+} from '../style';
+
+import {
+  Input,
+  Label,
+  Button,
+} from '../../../assets/app.js';
+
 const Form = (props) => {
   return (
-    <section>
+    <FormSection>
       <form onSubmit={props.addBrewery}>
         <div className="field">
-          <label
+          <Label
             htmlFor="beer"
           >
               Beer Name
-              <input
+              <Input
                 type="text"
                 name="beer"
                 id="beer"
@@ -20,14 +30,14 @@ const Form = (props) => {
                 onChange={event => props.handleBeerName(event)}
                 value={props.beerName}
               />
-          </label>
+          </Label>
         </div>
         <div className="field">
-          <label
+          <Label
             htmlFor="location"
           >
               Brewery Name*
-              <input
+              <Input
                 type="text"
                 name="location"
                 id="location"
@@ -35,14 +45,14 @@ const Form = (props) => {
                 onChange={event => props.handleBreweryName(event)}
                 value={props.breweryName}
               />
-          </label>
+          </Label>
         </div>
         <div className="field">
-          <label
+          <Label
             htmlFor="city"
           >
               City*
-              <input
+              <Input
                 type="text"
                 name="city"
                 id="city"
@@ -50,10 +60,10 @@ const Form = (props) => {
                 onChange={event => props.handleCityName(event)}
                 value={props.city}
               />
-          </label>
+          </Label>
         </div>
         <div className="field">
-          <label
+          <Label
             htmlFor="state"
           >
               State*
@@ -75,18 +85,18 @@ const Form = (props) => {
                   );
                 })}
               </select>
-          </label>
+          </Label>
         </div>
         <div className="field">
-          <button
+          <Button
             type="submit"
             onClick={event => props.addBrewery(event)}
           >
             Add Brewery!
-          </button>
+          </Button>
         </div>
       </form>
-    </section>
+    </FormSection>
   );
 };
 
