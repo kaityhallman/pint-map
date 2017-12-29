@@ -17,6 +17,7 @@ class App extends Component {
       isLoggedIn: false,
       phoneNumber: '',
       verificationCode: '',
+      verified: false,
     };
   }
 
@@ -33,17 +34,25 @@ class App extends Component {
   }
 
   toggleLogIn = () => {
-    this.setState({ isLoggedIn: !this.state.isLoggedIn });
+    this.setState({
+      isLoggedIn: !this.state.isLoggedIn,
+      verified: this.state.isLoggedIn,
+      phoneNumber: '',
+    });
   }
 
   handleToken = (token) => {
     window.localStorage.accessToken = token;
   }
 
+  confirmVerificationCode = () => {
+    this.setState({ verified: true });
+  }
+
   render() {
     return (
       <SignInFormWrapper>
-        {window.localStorage.accessToken ? (
+        {window.localStorage.accessToken && this.state.verified ? (
           <Main
             toggleLogIn={this.toggleLogIn}
           />
@@ -57,6 +66,8 @@ class App extends Component {
               enterVerificationCode={this.enterVerificationCode}
               toggleLogIn={this.toggleLogIn}
               handleToken={this.handleToken}
+              verified={this.state.verified}
+              confirmVerificationCode={this.confirmVerificationCode}
             />
           </SignInFormContent>
         )}

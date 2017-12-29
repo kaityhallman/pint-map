@@ -56,15 +56,16 @@ export const Label = styled.label`
 
 export const Button = styled.button`
   appearance: none;
-  background-color: #d0e1e0;
+  background-color: #5ddad3;
   border: none;
+  border-radius: 4px;
   cursor: pointer;
   font-size: 1em;
   padding: 8px 16px;
   transition: background-color 250ms ease-in;
 
   &:hover {
-    background-color: #a3bbb9;
+    background-color: darken(#5ddad3, 10%);
   }
 `;
 /* eslint-enable no-unused-expressions */

@@ -18,9 +18,9 @@ const Map = compose(
     }),
   }),
   withProps({
-    googleMapURL: API_URL,
+    googleMapURL: API_URL, // eslint-disable-line no-undef
     loadingElement: <div style={{ height: '100%' }} />,
-  containerElement: <div style={{ height: '100vh' }} />,
+    containerElement: <div style={{ height: '100vh' }} />,
     mapElement: <div style={{ height: '100%' }} />,
   }),
   withGoogleMap,

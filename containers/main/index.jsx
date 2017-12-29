@@ -5,10 +5,14 @@ import firebase from 'firebase';
 
 import {
   Article,
+  Brand,
+  Header,
   MapContainer,
   FormContainer,
   Wrapper,
 } from './style/main';
+import { Button } from '../../assets/app.js';
+
 import MapForm from '../forms/map-form/index.jsx';
 import Map from '../map/index.jsx';
 
@@ -107,7 +111,7 @@ class Main extends Component {
     this.setState({ breweryPlot });
   }
 
-  logOut = (event) => {
+  logOut = () => {
     firebase.auth().signOut().then(() => {
       this.props.toggleLogIn();
       window.localStorage.removeItem('accessToken');
@@ -120,11 +124,16 @@ class Main extends Component {
     const { breweryPlot } = this.state;
     return (
       <Article>
-        <button
-          onClick={event => this.logOut(event)}
-        >
-          Log Out
-        </button>
+        <Header>
+          <Brand>
+            Pint Map
+          </Brand>
+          <Button
+            onClick={() => this.logOut()}
+          >
+            Log Out
+          </Button>
+        </Header>
         <Wrapper>
           <MapContainer>
             <Map

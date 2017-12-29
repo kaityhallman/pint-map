@@ -59,6 +59,7 @@ class SignInForm extends Component {
     window.confirmationResult.confirm(verificationCode)
       .then(() => {
         this.props.toggleLogIn();
+        this.props.confirmVerificationCode();
       })
       .catch((error) => {
         console.error(`User couldn't sign in. Bad verification code? ${error}`); // eslint-disable-line
@@ -131,6 +132,7 @@ SignInForm.propTypes = {
   enterVerificationCode: PropTypes.func.isRequired,
   toggleLogIn: PropTypes.func.isRequired,
   handleToken: PropTypes.func.isRequired,
+  confirmVerificationCode: PropTypes.func.isRequired,
 };
 
 export default SignInForm;

@@ -87,7 +87,7 @@ const Form = (props) => {
               </select>
           </Label>
         </div>
-        <div className="field">
+        <div className="field" style={{ marginTop: '16px' }}>
           <Button
             type="submit"
             onClick={event => props.addBrewery(event)}
